@@ -1,0 +1,89 @@
+# Capability-slot model registry (Part 1).
+#
+# Routing rules reference a capability SLOT (e.g. [cheap_bulk]), never a model
+# ID. Each slot resolves to the current best model for that job. Change one
+# `current:` value and every rule using that slot re-points. Nothing else moves.
+#
+# Model IDs below are illustrative. `cost_*` are USD per 1M tokens (snapshot,
+# verify before relying on them).
+
+capabilities:
+
+  orchestration:
+    current: claude-opus
+    vendor: anthropic
+    why: "Single accountable owner: novel reasoning, written judgment"
+    fallback: [deepseek-v4-pro]
+    cost_in: 15.00
+    cost_out: 75.00
+    health: { trust: high, error_rate_24h: 0.000 }
+
+  iterative_tooluse:
+    current: claude-sonnet
+    vendor: anthropic
+    why: "Deep tool-call loops, refactor analysis"
+    fallback: [deepseek-v4-pro, claude-haiku]
+    cost_in: 3.00
+    cost_out: 15.00
+    health: { trust: high, error_rate_24h: 0.000 }
+
+  fast_classify:
+    current: claude-haiku
+    vendor: anthropic
+    why: "Sub-second yes/no and routing decisions"
+    fallback: [deepseek-v4-flash]
+    cost_in: 0.80
+    cost_out: 4.00
+    health: { trust: high, error_rate_24h: 0.000 }
+
+  cheap_bulk:
+    current: deepseek-v4-flash
+    vendor: deepseek
+    mode: non_thinking
+    why: "Cheapest good-enough worker for audit, review, summarize"
+    fallback: [claude-haiku, claude-sonnet]
+    cost_in: 0.14
+    cost_out: 0.28
+    health: { trust: high, error_rate_24h: 0.000 }
+
+  long_context_reasoning:
+    current: deepseek-v4-pro
+    vendor: deepseek
+    mode: thinking
+    why: "1M context plus solid reasoning, cheap"
+    fallback: [claude-sonnet, claude-opus]
+    cost_in: 0.435
+    cost_out: 0.87
+    health: { trust: high, error_rate_24h: 0.000 }
+
+  frontier_reasoning:
+    current: claude-opus
+    vendor: anthropic
+    why: "Hard problems, after cheaper tiers failed"
+    fallback: [deepseek-v4-pro]
+    cost_in: 15.00
+    cost_out: 75.00
+    health: { trust: high, error_rate_24h: 0.000 }
+
+  algorithmic_max:
+    current: deepseek-v4-pro
+    vendor: deepseek
+    mode: think_max
+    why: "Math-heavy, algorithm-heavy, frontier reasoning at low cost"
+    fallback: [claude-opus]
+    cost_in: 0.435
+    cost_out: 0.87
+    health: { trust: high, error_rate_24h: 0.000 }
+
+  # Sensitive sessions resolve ONLY to this slot, which is locked to one
+  # trusted vendor. See privacy/ (Part 2) for how the working directory
+  # selects this policy.
+  pii_safe:
+    current: claude-opus
+    vendor: anthropic
+    trusted_vendors: [anthropic]   # never resolves outside this allowlist
+    why: "Sensitive session: trusted vendor only, no third-party endpoint"
+    fallback: [claude-sonnet, claude-haiku]
+    cost_in: 15.00
+    cost_out: 75.00
+    health: { trust: high, error_rate_24h: 0.000 }

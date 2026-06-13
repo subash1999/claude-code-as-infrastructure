@@ -1,0 +1,12 @@
+direction: down
+title: |md
+  ### 1 · Capability-slot model registry
+| {near: top-center}
+rule: "Routing rule:\nuse [cheap_bulk]" {shape: page; style.fill: "#dbeafe"}
+reg: "model-registry.yaml\none source of truth" {style.fill: "#eef2ff"}
+cur: "deepseek-v4-flash\n(current)" {style.fill: "#dcfce7"}
+fb: "haiku then sonnet\n(fallback if unhealthy)" {style.fill: "#fef9c3"}
+rule -> reg: "slot name,\nnot a model id"
+reg -> cur: "resolves to"
+reg -> fb: "degrades to"
+note: "change one line, every rule re-points" {shape: text; near: bottom-center}

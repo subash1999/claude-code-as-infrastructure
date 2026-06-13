@@ -1,0 +1,13 @@
+direction: right
+title: |md
+  ### 3 · Brain and hands
+| {near: top-center}
+task: "A task" {shape: oval}
+q: "wrong answer\ncheap to catch?" {shape: diamond; style.fill: "#fef9c3"}
+hands: "Hands:\nDeepSeek Flash\n0.28 USD / Mtok out" {style.fill: "#dcfce7"}
+brain: "Brain:\nfrontier model\n15-75 USD / Mtok out" {style.fill: "#dbeafe"}
+verify: "human or stronger\nmodel verifies" {style.fill: "#eef2ff"}
+task -> q
+q -> hands: "yes (bulk)"
+q -> brain: "no (high stakes)"
+hands -> verify

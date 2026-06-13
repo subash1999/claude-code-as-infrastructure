@@ -1,0 +1,13 @@
+direction: right
+title: |md
+  ### 6 · Config as code
+| {near: top-center}
+fresh: "Fresh machine" {shape: oval}
+prompt: "Paste the\nAI restore prompt" {style.fill: "#fef9c3"}
+repo: "git repo =\nagent home (~/.claude)" {shape: cylinder; style.fill: "#e0e7ff"}
+install: "install.sh:\nbackup, build, register MCP,\nenv check (idempotent)" {style.fill: "#dbeafe"}
+manual: "You add: secrets,\nMCP OAuth\n(not in repo)" {style.fill: "#fecaca"}
+fresh -> prompt: "one paste"
+prompt -> repo: "clone"
+prompt -> install: "agent runs"
+install -> manual: "still needs"

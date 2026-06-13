@@ -1,0 +1,13 @@
+direction: right
+title: |md
+  ### 4 · Custom MCP server to DeepSeek
+| {near: top-center}
+agent: "Agent\n(Claude Code)" {shape: hexagon; style.fill: "#111827"; style.font-color: "#ffffff"}
+mcp: "deepseek-v4\nMCP server (stdio)" {style.fill: "#fef9c3"}
+api: "api.deepseek.com/anthropic\nPOST /v1/messages\nAnthropic format" {style.fill: "#dbeafe"}
+log: "usage.jsonl\ntokens, cost" {shape: cylinder; style.fill: "#eef2ff"}
+agent -> mcp: "calls tool\ndeepseek_v4_flash"
+mcp -> api: "x-api-key +\nanthropic-version"
+api -> mcp: "content[] text"
+mcp -> agent: "result"
+mcp -> log: "append per call"

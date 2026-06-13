@@ -1,0 +1,62 @@
+# A config that updates itself (Part 5).
+#
+# Weekly: scan model/CLI release notes, health-check the registry, consolidate
+# learnings, then GATE: auto-merge append-only/log changes, open a PR for
+# anything risky (a model swap, a new skill/hook). Auto-merging changes into a
+# config an agent EXECUTES is a supply-chain risk, so behaviour changes are
+# always PR-gated. Fail toward PR when unsure.
+#
+# The scanner scripts (scripts/*.js) are not included here; this file shows the
+# shape. Replace <your-config-repo> usage as needed.
+
+name: Meta Update
+
+on:
+  schedule:
+    - cron: "0 18 * * SAT"   # weekly, Saturday 18:00 UTC
+  workflow_dispatch:
+
+jobs:
+  meta-update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+
+      - name: Scan releases (Anthropic / DeepSeek / CLI)
+        run: node scripts/release-tracker.js
+
+      - name: Health-check registry slots
+        run: node scripts/registry-proposer.js
+
+      - name: Consolidate learnings queue
+        run: node scripts/learnings-consolidator.js
+        continue-on-error: true
+
+      - name: Gate proposals (safe vs risky)
+        id: gate
+        run: node scripts/auto-apply.js   # sets outputs: has_auto_merge, has_risky
+
+      - name: Auto-merge SAFE changes (append-only / logs only)
+        if: steps.gate.outputs.has_auto_merge == 'true'
+        run: |
+          git config user.name  'meta-update-bot'
+          git config user.email 'noreply@github.com'
+          git add -A
+          git commit -m "chore: weekly meta-update (auto, safe-only)" || echo "nothing to commit"
+          git push
+
+      - name: Open PR for RISKY changes (model swaps, new skills/hooks)
+        if: steps.gate.outputs.has_risky == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: auto-updates/weekly
+          title: "Meta update — review required"
+          body-path: /tmp/proposal-body.md
+          delete-branch: true

@@ -1,0 +1,14 @@
+direction: down
+title: |md
+  ### 2 · Directory-scoped privacy firewall
+| {near: top-center}
+start: "Session starts\nin a directory" {shape: oval}
+check: "cwd under a\nsensitive prefix?" {shape: diamond; style.fill: "#fee2e2"}
+safe: "policy = pii_safe\nAnthropic only,\nthird-party blocked" {style.fill: "#fecaca"}
+norm: "default routing\ncheap_bulk allowed" {style.fill: "#dcfce7"}
+drop: "Stop hook: classify learning,\nprivate_high dropped\nbefore memory write" {style.fill: "#fef9c3"}
+start -> check
+check -> safe: "yes"
+check -> norm: "no"
+safe -> drop
+norm -> drop

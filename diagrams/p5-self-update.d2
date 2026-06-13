@@ -1,0 +1,13 @@
+direction: down
+title: |md
+  ### 5 · A config that updates itself
+| {near: top-center}
+cron: "Weekly cron\nGitHub Actions" {shape: oval; style.fill: "#f3e8ff"}
+scan: "Scan model / CLI\nrelease notes" {style.fill: "#eef2ff"}
+health: "Health-check\nregistry slots" {style.fill: "#eef2ff"}
+gate: "Risk gate" {shape: diamond; style.fill: "#fde68a"}
+auto: "Safe (logs):\nauto-merge to main" {style.fill: "#dcfce7"}
+pr: "Risky (model swap):\nopen PR, review on phone" {style.fill: "#fecaca"}
+cron -> scan -> health -> gate
+gate -> auto: "safe"
+gate -> pr: "risky"

@@ -1,0 +1,17 @@
+{
+  "name": "deepseek-v4-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server exposing DeepSeek (via its Anthropic-compatible endpoint) as tools for an agent like Claude Code.",
+  "type": "module",
+  "bin": {
+    "deepseek-v4-mcp": "./server.mjs"
+  },
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.23.0"
+  },
+  "license": "MIT"
+}

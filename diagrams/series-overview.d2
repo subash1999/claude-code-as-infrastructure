@@ -1,0 +1,23 @@
+direction: right
+title: |md
+  # Your AI coding agent, as infrastructure
+| {near: top-center; style.font-size: 22}
+
+agent: "AI coding\nagent" {
+  shape: hexagon
+  style: {fill: "#111827"; font-color: "#ffffff"; bold: true}
+}
+
+reg: "1 · Model registry\nroute by capability slot" {style.fill: "#dbeafe"}
+fw: "2 · Privacy firewall\ndirectory = trust boundary" {style.fill: "#fee2e2"}
+bh: "3 · Brain + hands\ncheap model does bulk" {style.fill: "#dcfce7"}
+mcp: "4 · MCP server\nDeepSeek as a tool" {style.fill: "#fef9c3"}
+upd: "5 · Self-updating\nweekly release scan" {style.fill: "#f3e8ff"}
+iac: "6 · Config as code\none paste restores it" {style.fill: "#e0e7ff"}
+
+agent -> reg: "asks for a slot"
+reg -> bh: "cheap_bulk"
+bh -> mcp: "delegates"
+fw -> reg: "locks pii_safe\nin sensitive dirs"
+upd -> reg: "keeps fresh"
+iac -> agent: "reproduce anywhere"
