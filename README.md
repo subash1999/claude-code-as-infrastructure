@@ -12,12 +12,12 @@ An AI coding agent's config is volatile (models change monthly), multi-vendor (y
 
 | Part | Discipline | What's here |
 |---|---|---|
-| 1. [Capability-slot model registry](#1-capability-slot-model-registry) | abstraction | [`model-registry.example.yaml`](./model-registry.example.yaml) · [`resolve.mjs`](./resolve.mjs) |
-| 2. [Directory-scoped privacy firewall](#2-privacy-firewall) | security | [`privacy/`](./privacy/) |
-| 3. [Brain and hands (cost routing)](#3-brain-and-hands) | cost engineering | [`routing/brain-and-hands.md`](./routing/brain-and-hands.md) |
-| 4. [Custom MCP server → DeepSeek](#4-custom-mcp-server) | integration | [`deepseek-mcp-server/`](./deepseek-mcp-server/) |
-| 5. [A config that updates itself](#5-self-updating-config) | operations | [`.github/workflows/meta-update.example.yml`](./.github/workflows/meta-update.example.yml) |
-| 6. [Config as code](#6-config-as-code) | reproducibility | [`install.example.sh`](./install.example.sh) · [`RESTORE-PROMPT.md`](./RESTORE-PROMPT.md) |
+| 1. [Capability-slot model registry](https://medium.com/p/4009afde1288) | abstraction | [`model-registry.example.yaml`](./model-registry.example.yaml) · [`resolve.mjs`](./resolve.mjs) |
+| 2. [Directory-scoped privacy firewall](#read-the-series-on-medium) | security | [`privacy/`](./privacy/) |
+| 3. [Brain and hands (cost routing)](#read-the-series-on-medium) | cost engineering | [`routing/brain-and-hands.md`](./routing/brain-and-hands.md) |
+| 4. [Custom MCP server → DeepSeek](#read-the-series-on-medium) | integration | [`deepseek-mcp-server/`](./deepseek-mcp-server/) |
+| 5. [A config that updates itself](#read-the-series-on-medium) | operations | [`.github/workflows/meta-update.example.yml`](./.github/workflows/meta-update.example.yml) |
+| 6. [Config as code](#read-the-series-on-medium) | reproducibility | [`install.example.sh`](./install.example.sh) · [`RESTORE-PROMPT.md`](./RESTORE-PROMPT.md) |
 
 ## Read the series on Medium
 
