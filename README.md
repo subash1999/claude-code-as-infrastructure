@@ -19,7 +19,16 @@ An AI coding agent's config is volatile (models change monthly), multi-vendor (y
 | 5. [A config that updates itself](#5-self-updating-config) | operations | [`.github/workflows/meta-update.example.yml`](./.github/workflows/meta-update.example.yml) |
 | 6. [Config as code](#6-config-as-code) | reproducibility | [`install.example.sh`](./install.example.sh) · [`RESTORE-PROMPT.md`](./RESTORE-PROMPT.md) |
 
-> Medium links are added as each part publishes (one per week).
+## Read the series on Medium
+
+Published one part per week. Links go live as each part ships.
+
+1. [How I Built a Model Registry That Routes Claude Code to Any LLM](https://medium.com/p/4009afde1288)
+2. Directory-Scoped PII Firewall for Claude Code Agents *(soon)*
+3. Brain and Hands: Routing Bulk AI Work to a 53x Cheaper Model *(soon)*
+4. How to Build a Custom MCP Server for Claude Code *(soon)*
+5. I Built a Weekly CI Pipeline for My Personal Config. Yes, Really. *(soon)*
+6. My Entire AI Agent Setup Lives in a Git Repo. One Paste Restores It. *(soon)*
 
 ## Quickstart (the flagship: the MCP server)
 
