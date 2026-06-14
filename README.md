@@ -1,5 +1,7 @@
 # Treat your AI coding agent like infrastructure
 
+![The six infrastructure disciplines applied to an AI coding agent: a capability-slot model registry, a directory-scoped privacy firewall, brain/hands cost routing, a custom MCP server, a self-updating config, and config-as-code.](diagrams/series-overview.png)
+
 Reference code for a 6-part series on running [Claude Code](https://claude.com/claude-code) (and agents like it) the way you'd run infrastructure: versioned, multi-vendor, cost-aware, and security-scoped.
 
 This is a **reference implementation**, not a drop-in product. The snippets are intentionally small and self-contained so you can lift the idea, not clone a setup. It is a personal config pattern, not production infrastructure.
