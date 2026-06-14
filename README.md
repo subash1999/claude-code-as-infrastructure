@@ -2,7 +2,7 @@
 
 ![The six infrastructure disciplines applied to an AI coding agent: a capability-slot model registry, a directory-scoped privacy firewall, brain/hands cost routing, a custom MCP server, a self-updating config, and config-as-code.](diagrams/series-overview.png)
 
-Reference code for a 6-part series on running [Claude Code](https://claude.com/claude-code) (and agents like it) the way you'd run infrastructure: versioned, multi-vendor, cost-aware, and security-scoped.
+Reference code for a 6-part series (plus a bonus capstone) on running [Claude Code](https://claude.com/claude-code) (and agents like it) the way you'd run infrastructure: versioned, multi-vendor, cost-aware, and security-scoped.
 
 This is a **reference implementation**, not a drop-in product. The snippets are intentionally small and self-contained so you can lift the idea, not clone a setup. It is a personal config pattern, not production infrastructure.
 
@@ -18,6 +18,11 @@ An AI coding agent's config is volatile (models change monthly), multi-vendor (y
 | 4. [Custom MCP server → DeepSeek](#read-the-series-on-medium) | integration | [`deepseek-mcp-server/`](./deepseek-mcp-server/) |
 | 5. [A config that updates itself](#read-the-series-on-medium) | operations | [`.github/workflows/meta-update.example.yml`](./.github/workflows/meta-update.example.yml) |
 | 6. [Config as code](#read-the-series-on-medium) | reproducibility | [`install.example.sh`](./install.example.sh) · [`RESTORE-PROMPT.md`](./RESTORE-PROMPT.md) |
+| 7. [Tool-bridge (capstone)](#read-the-series-on-medium) | trust boundary | [`routing/tool-bridge.md`](./routing/tool-bridge.md) · [`routing/vet-commands.example.mjs`](./routing/vet-commands.example.mjs) |
+
+Part 7 is a capstone, not a seventh discipline: it composes the [privacy firewall](./privacy/) (Part 2) and [brain and hands](./routing/brain-and-hands.md) (Part 3) so a cheap, tool-less *external* model can review a state-dependent change safely. The model enumerates the read-only state it needs, the orchestrator vets every proposed command against an allowlist, cheap in-house hands run them, and the model reviews grounded in real state. The vetting gate is runnable: `node routing/vet-commands.example.mjs`.
+
+![The tool-bridge: an external reasoner enumerates the read-only state it needs, an orchestrator vetting gate filters proposed commands against a read-only allowlist, cheap in-house hands execute the vetted commands, and the external reasoner returns a verdict grounded in real state.](diagrams/p7-tool-bridge.png)
 
 ## Read the series on Medium
 
@@ -29,6 +34,7 @@ Published one part per week. Links go live as each part ships.
 4. How to Build a Custom MCP Server for Claude Code *(soon)*
 5. I Built a Weekly CI Pipeline for My Personal Config. Yes, Really. *(soon)*
 6. My Entire AI Agent Setup Lives in a Git Repo. One Paste Restores It. *(soon)*
+7. *(bonus)* Tool-Bridge: How I Let a Cheaper, Tool-less Model Review Live State Safely *(soon)*
 
 ## Quickstart (the flagship: the MCP server)
 
@@ -44,6 +50,8 @@ claude mcp add -s user --env=DEEPSEEK_API_KEY=$DEEPSEEK_API_KEY deepseek-v4 -- n
 ## Prior art (this is not invented here)
 
 Capability-based model routing already exists in more complete forms: [LiteLLM](https://github.com/BerriAI/litellm) (proxy + model aliases), [OpenRouter](https://openrouter.ai) (many providers behind one API), and the [RouteLLM](https://github.com/lm-sys/RouteLLM) research line (route by difficulty). This repo is the small, personal version, useful for understanding the pattern and for a one-person setup. For anything bigger, reach for those.
+
+The Part 7 tool-bridge is also a composition of known pieces: function-calling/tool-use, sandboxed read-only execution, and human-in-the-loop command approval (Claude Code's own permission prompts are one form). What's combined here is pointing that approval gate at commands proposed by a *different vendor's* tool-less model, specifically to ground its review in live state at ~2 calls — cross-vendor second opinions without trusting the other vendor with your shell.
 
 ## A note on DeepSeek
 

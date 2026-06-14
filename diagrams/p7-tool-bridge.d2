@@ -1,0 +1,15 @@
+direction: right
+title: |md
+  ### 7 · Tool-bridge: grounding a tool-less reasoner
+| {near: top-center}
+task: "diff + task" {shape: oval}
+enum: "external reasoner:\nenumerate read-only\nstate it needs" {style.fill: "#dbeafe"}
+vet: "VET (orchestrator)\nread-only allowlist,\nfail closed" {shape: diamond; style.fill: "#fecaca"}
+hands: "cheap hands:\nrun vetted cmds,\nreturn raw output" {style.fill: "#dcfce7"}
+review: "external reasoner:\nverdict grounded\nin real state" {style.fill: "#dbeafe"}
+reject: "rejected cmd ->\nfeed reason back\n(<=1 more round)" {style.fill: "#fef9c3"}
+task -> enum
+enum -> vet: "proposed commands"
+vet -> hands: "allowed"
+vet -> reject: "write / secret / OOS"
+hands -> review: "raw state"
